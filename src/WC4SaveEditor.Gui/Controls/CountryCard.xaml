@@ -1,0 +1,28 @@
+<UserControl x:Class="WC4SaveEditor.Gui.Controls.CountryCard"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d" d:DesignWidth="150" x:Name="This">
+    <Grid>
+        <Border x:Name="Root" Background="{StaticResource SurfaceRaisedBrush}" BorderBrush="{StaticResource BorderBrush0}"
+                BorderThickness="1.5" CornerRadius="8" Padding="7,6" Margin="4" Cursor="Hand"
+                PreviewMouseLeftButtonDown="Root_PreviewMouseLeftButtonDown" MouseMove="Root_MouseMove">
+            <StackPanel Orientation="Horizontal">
+                <Border Width="26" Height="26" CornerRadius="13" Background="{Binding CardData.ColorBrush, ElementName=This}"
+                        Margin="0,0,8,0" ClipToBounds="True">
+                    <Image Source="{Binding CardData.FlagSource, ElementName=This}" Stretch="UniformToFill" Width="26" Height="26"/>
+                </Border>
+                <TextBlock Text="{Binding CardData.Name, ElementName=This}" Style="{StaticResource TextBody}" VerticalAlignment="Center"
+                           TextTrimming="CharacterEllipsis" MaxWidth="104"/>
+            </StackPanel>
+        </Border>
+
+        <Border Width="16" Height="16" CornerRadius="8" Background="{StaticResource AccentBrush}"
+                HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,-2,-2,0"
+                Visibility="{Binding IsChecked, ElementName=This, Converter={StaticResource BoolToVisibilityConverter}}">
+            <TextBlock Text="&#10003;" FontSize="10" FontWeight="Bold" Foreground="{StaticResource AccentTextBrush}"
+                       HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </Border>
+    </Grid>
+</UserControl>

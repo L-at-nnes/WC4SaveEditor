@@ -1,0 +1,7 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/WC4SaveEditor.Core.Tests/WC4SaveEditor.Core.Tests.csproj" />
+    <Project Path="src/WC4SaveEditor.Core/WC4SaveEditor.Core.csproj" />
+    <Project Path="src/WC4SaveEditor.Gui/WC4SaveEditor.Gui.csproj" />
+  </Folder>
+</Solution>

@@ -1,0 +1,62 @@
+<UserControl x:Class="WC4SaveEditor.Gui.Views.MapPanel"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <StackPanel>
+        <TextBlock Text="Transfer tile" Style="{StaticResource SectionHeader}"
+                    ToolTip="Transfer Tile — reassigns ownership of a single map tile. Scroll to zoom, drag to pan, click a tile to reassign it."/>
+        <TextBlock Text="Scroll to zoom, drag to pan, click a tile to reassign its owner." Style="{StaticResource TextCaption}" Margin="0,0,0,12"/>
+
+        <Border Background="{StaticResource SurfaceBrush}" BorderBrush="{StaticResource BorderBrush0}" BorderThickness="1"
+                CornerRadius="8" ClipToBounds="True" Height="480">
+            <Grid x:Name="MapHost" ClipToBounds="True" Background="Transparent"
+                  MouseWheel="MapHost_MouseWheel" MouseLeftButtonDown="MapHost_MouseLeftButtonDown"
+                  MouseMove="MapHost_MouseMove" MouseLeftButtonUp="MapHost_MouseLeftButtonUp">
+                <Canvas x:Name="MapCanvas" Width="{Binding CanvasWidth}" Height="{Binding CanvasHeight}"
+                        HorizontalAlignment="Left" VerticalAlignment="Top">
+                    <Canvas.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform x:Name="MapScale" ScaleX="1" ScaleY="1"/>
+                            <TranslateTransform x:Name="MapTranslate" X="24" Y="24"/>
+                        </TransformGroup>
+                    </Canvas.RenderTransform>
+                    <ItemsControl ItemsSource="{Binding Tiles}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate><Canvas/></ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Polygon Points="{Binding Points}" Fill="{Binding Fill}" Stroke="#000000" StrokeThickness="0.6">
+                                    <Polygon.Style>
+                                        <Style TargetType="Polygon">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding HasPendingChange}" Value="True">
+                                                    <Setter Property="Stroke" Value="{StaticResource AccentBrush}"/>
+                                                    <Setter Property="StrokeThickness" Value="2"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Polygon.Style>
+                                </Polygon>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </Canvas>
+
+                <Popup Placement="MousePoint" IsOpen="{Binding IsFlyoutOpen}" AllowsTransparency="True" StaysOpen="False">
+                    <Border Background="{StaticResource SurfaceRaisedBrush}" BorderBrush="{StaticResource AccentBrush}"
+                            BorderThickness="1" CornerRadius="8" Padding="12">
+                        <StackPanel Width="200">
+                            <TextBlock Text="Reassign tile to" Style="{StaticResource TextBodyEmphasis}" Margin="0,0,0,8"/>
+                            <ComboBox ItemsSource="{Binding Players}" SelectedItem="{Binding PickedOwner}"
+                                      DisplayMemberPath="Name" Margin="0,0,0,10"/>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                <Button Content="Cancel" Style="{StaticResource LinkButton}" Command="{Binding CancelReassignCommand}" Margin="0,0,6,0"/>
+                                <Button Content="Set" Style="{StaticResource AccentButton}" Command="{Binding ConfirmReassignCommand}" Padding="12,6"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                </Popup>
+            </Grid>
+        </Border>
+    </StackPanel>
+</UserControl>

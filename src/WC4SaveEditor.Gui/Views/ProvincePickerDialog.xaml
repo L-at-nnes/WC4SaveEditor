@@ -1,0 +1,37 @@
+<Window x:Class="WC4SaveEditor.Gui.Views.ProvincePickerDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Pick provinces" Height="480" Width="420" WindowStartupLocation="CenterOwner"
+        Background="{StaticResource BackgroundBrush}" FontFamily="{StaticResource UiFont}">
+    <DockPanel Margin="16">
+        <TextBlock x:Name="HeaderText" DockPanel.Dock="Top" Style="{StaticResource TextSubtitle}" Margin="0,0,0,12"/>
+
+        <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,12,0,0">
+            <Button Content="Cancel" Style="{StaticResource ButtonBase}" Click="Cancel_Click" Margin="0,0,8,0"/>
+            <Button Content="Apply" Style="{StaticResource AccentButton}" Click="Apply_Click"/>
+        </StackPanel>
+
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <ItemsControl x:Name="ProvinceList">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border Background="{StaticResource SurfaceRaisedBrush}" BorderBrush="{StaticResource BorderBrush0}"
+                                BorderThickness="1" CornerRadius="6" Padding="10" Margin="0,0,0,6">
+                            <StackPanel Orientation="Horizontal">
+                                <CheckBox IsChecked="{Binding IsChecked}" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                                <StackPanel>
+                                    <TextBlock Text="{Binding Province.Name}" Style="{StaticResource TextBodyEmphasis}"/>
+                                    <TextBlock Style="{StaticResource TextCaption}">
+                                        <Run Text="{Binding Province.TileCount, Mode=OneWay}"/><Run Text=" tiles, "/>
+                                        <Run Text="{Binding Province.UnitCount, Mode=OneWay}"/><Run Text=" units, "/>
+                                        <Run Text="{Binding Province.PortCount, Mode=OneWay}"/><Run Text=" ports"/>
+                                    </TextBlock>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+    </DockPanel>
+</Window>

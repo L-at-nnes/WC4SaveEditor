@@ -1,0 +1,51 @@
+<UserControl x:Class="WC4SaveEditor.Gui.Views.SpawnUnitsPanel"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <StackPanel>
+        <TextBlock Text="Spawn units" Style="{StaticResource SectionHeader}"
+                    ToolTip="Spawn Units — creates new special units (with an individual level) in one of your provinces."/>
+
+        <TextBlock Text="Your provinces" Style="{StaticResource TextBodyEmphasis}" Margin="0,0,0,8"/>
+        <ListBox ItemsSource="{Binding OwnProvinces}" SelectedItem="{Binding SelectedProvince}"
+                 Background="{StaticResource SurfaceBrush}" BorderBrush="{StaticResource BorderBrush0}" BorderThickness="1"
+                 ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.CanContentScroll="False" Padding="4">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Style="{StaticResource TextBody}" Padding="6,4">
+                        <Run Text="{Binding Name, Mode=OneWay}"/>
+                        <Run Text=" (" Foreground="{StaticResource TextSecondaryBrush}"/>
+                        <Run Text="{Binding TileCount, Mode=OneWay}" Foreground="{StaticResource TextSecondaryBrush}"/>
+                        <Run Text=" tiles, " Foreground="{StaticResource TextSecondaryBrush}"/>
+                        <Run Text="{Binding PortCount, Mode=OneWay}" Foreground="{StaticResource TextSecondaryBrush}"/>
+                        <Run Text=" ports)" Foreground="{StaticResource TextSecondaryBrush}"/>
+                    </TextBlock>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <Grid Margin="0,16,0,0" Visibility="{Binding SelectedProvince, Converter={StaticResource NotNullToVisibilityConverter}}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0" Margin="0,0,12,0">
+                <TextBlock Text="Unit type" Style="{StaticResource TextCaption}" Margin="0,0,0,4"/>
+                <ComboBox ItemsSource="{Binding UnitTypes}" SelectedItem="{Binding SelectedUnitType}"
+                          DisplayMemberPath="DisplayName"/>
+            </StackPanel>
+            <StackPanel Grid.Column="1" Margin="0,0,12,0">
+                <TextBlock Text="Level (1-9)" Style="{StaticResource TextCaption}" Margin="0,0,0,4"/>
+                <TextBox Text="{Binding Level, UpdateSourceTrigger=PropertyChanged}"/>
+            </StackPanel>
+            <StackPanel Grid.Column="2" Margin="0,0,12,0">
+                <TextBlock Text="Count" Style="{StaticResource TextCaption}" Margin="0,0,0,4"/>
+                <TextBox Text="{Binding Count, UpdateSourceTrigger=PropertyChanged}"/>
+            </StackPanel>
+            <Button Grid.Column="3" Content="Queue spawn" Style="{StaticResource ButtonBase}" VerticalAlignment="Bottom"
+                    Command="{Binding ConfirmSpawnCommand}"/>
+        </Grid>
+    </StackPanel>
+</UserControl>

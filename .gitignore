@@ -15,3 +15,8 @@
 # vendor/
 
 data/*
+
+# .NET build output
+src/**/bin/
+src/**/obj/
+*.sav.bak

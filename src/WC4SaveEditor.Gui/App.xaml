@@ -1,0 +1,20 @@
+<Application x:Class="WC4SaveEditor.Gui.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:WC4SaveEditor.Gui"
+             xmlns:helpers="clr-namespace:WC4SaveEditor.Gui.Helpers"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles/Theme.xaml"/>
+                <ResourceDictionary Source="Styles/Controls.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <helpers:FileNameConverter x:Key="FileNameConverter"/>
+            <helpers:CountToVisibilityConverter x:Key="CountToVisibilityConverter"/>
+            <helpers:NotNullToVisibilityConverter x:Key="NotNullToVisibilityConverter"/>
+            <helpers:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+            <helpers:BoolToOpacityConverter x:Key="BoolToOpacityConverter"/>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

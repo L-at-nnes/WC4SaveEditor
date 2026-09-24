@@ -1,0 +1,72 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <SolidColorBrush x:Key="BackgroundBrush" Color="#121316"/>
+    <SolidColorBrush x:Key="SurfaceBrush" Color="#1B1D21"/>
+    <SolidColorBrush x:Key="SurfaceRaisedBrush" Color="#22252A"/>
+    <SolidColorBrush x:Key="BorderBrush0" Color="#2A2D33"/>
+    <SolidColorBrush x:Key="TextPrimaryBrush" Color="#ECEDEF"/>
+    <SolidColorBrush x:Key="TextSecondaryBrush" Color="#9A9DA6"/>
+    <SolidColorBrush x:Key="TextDisabledBrush" Color="#5A5D64"/>
+
+    <SolidColorBrush x:Key="AccentBrush" Color="#D89A4A"/>
+    <SolidColorBrush x:Key="AccentHoverBrush" Color="#E5AC63"/>
+    <SolidColorBrush x:Key="AccentPressedBrush" Color="#C08639"/>
+    <SolidColorBrush x:Key="AccentTextBrush" Color="#1B1204"/>
+
+    <SolidColorBrush x:Key="TeamBlueBrush" Color="#5B8DEF"/>
+    <SolidColorBrush x:Key="TeamRedBrush" Color="#E0605A"/>
+    <SolidColorBrush x:Key="TeamNeutralBrush" Color="#7A7D85"/>
+
+    <FontFamily x:Key="UiFont">Segoe UI Variable Text, Segoe UI</FontFamily>
+
+    <Style x:Key="TextCaption" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource UiFont}"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="Foreground" Value="{StaticResource TextSecondaryBrush}"/>
+    </Style>
+
+    <Style x:Key="TextBody" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource UiFont}"/>
+        <Setter Property="FontSize" Value="13"/>
+        <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}"/>
+    </Style>
+
+    <Style x:Key="TextBodyEmphasis" TargetType="TextBlock" BasedOn="{StaticResource TextBody}">
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+    </Style>
+
+    <Style x:Key="TextSubtitle" TargetType="TextBlock" BasedOn="{StaticResource TextBody}">
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+    </Style>
+
+    <Style x:Key="TextSectionTitle" TargetType="TextBlock" BasedOn="{StaticResource TextBody}">
+        <Setter Property="FontSize" Value="20"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="Margin" Value="0,0,0,4"/>
+    </Style>
+
+    <Style x:Key="TextHeadline" TargetType="TextBlock" BasedOn="{StaticResource TextBody}">
+        <Setter Property="FontSize" Value="26"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+    </Style>
+
+    <Style TargetType="ToolTip">
+        <Setter Property="Background" Value="{StaticResource SurfaceRaisedBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource BorderBrush0}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Padding" Value="10,6"/>
+        <Setter Property="FontFamily" Value="{StaticResource UiFont}"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="HasDropShadow" Value="True"/>
+    </Style>
+
+    <Style TargetType="ScrollBar">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Width" Value="10"/>
+    </Style>
+
+</ResourceDictionary>

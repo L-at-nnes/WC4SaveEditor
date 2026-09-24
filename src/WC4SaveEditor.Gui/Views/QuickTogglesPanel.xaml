@@ -1,0 +1,49 @@
+<UserControl x:Class="WC4SaveEditor.Gui.Views.QuickTogglesPanel"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <StackPanel>
+        <TextBlock Text="Quick actions" Style="{StaticResource SectionHeader}"/>
+
+        <Border Background="{StaticResource SurfaceBrush}" BorderBrush="{StaticResource BorderBrush0}"
+                BorderThickness="1" CornerRadius="8" Padding="16" Margin="0,0,0,16">
+            <StackPanel Orientation="Horizontal">
+                <CheckBox Style="{StaticResource ToggleSwitch}" IsChecked="{Binding ConquerAll}" VerticalAlignment="Center"
+                          ToolTip="Conquer All — converts every tile on the map to your ownership (player 0)."/>
+                <TextBlock Text="Conquer all" Style="{StaticResource TextSubtitle}" VerticalAlignment="Center" Margin="12,0,0,0"/>
+            </StackPanel>
+        </Border>
+
+        <UniformGrid Columns="2" Rows="3">
+            <StackPanel Style="{StaticResource ToggleRow}">
+                <CheckBox Style="{StaticResource ToggleSwitch}" IsChecked="{Binding MaxMoney}" VerticalAlignment="Center"
+                          ToolTip="Max Money — sets your currency to 9999."/>
+                <TextBlock Text="Max money" Style="{StaticResource TextBody}" VerticalAlignment="Center" Margin="10,0,0,0"/>
+            </StackPanel>
+            <StackPanel Style="{StaticResource ToggleRow}">
+                <CheckBox Style="{StaticResource ToggleSwitch}" IsChecked="{Binding MaxCityTech}" VerticalAlignment="Center"
+                          ToolTip="Max City Tech — sets all your city tech levels to level 4."/>
+                <TextBlock Text="Max city tech" Style="{StaticResource TextBody}" VerticalAlignment="Center" Margin="10,0,0,0"/>
+            </StackPanel>
+            <StackPanel Style="{StaticResource ToggleRow}">
+                <CheckBox Style="{StaticResource ToggleSwitch}" IsChecked="{Binding MaxCityLevel}" VerticalAlignment="Center"
+                          ToolTip="Max City Level — upgrades your non-capital cities up to level 4 (capitals and higher-level cities are left alone)."/>
+                <TextBlock Text="Max city level" Style="{StaticResource TextBody}" VerticalAlignment="Center" Margin="10,0,0,0"/>
+            </StackPanel>
+            <StackPanel Style="{StaticResource ToggleRow}">
+                <CheckBox Style="{StaticResource ToggleSwitch}" IsChecked="{Binding MaxMorale}" VerticalAlignment="Center"
+                          ToolTip="Max Morale — sets maximum morale for your combat units."/>
+                <TextBlock Text="Max morale" Style="{StaticResource TextBody}" VerticalAlignment="Center" Margin="10,0,0,0"/>
+            </StackPanel>
+            <StackPanel Style="{StaticResource ToggleRow}">
+                <CheckBox Style="{StaticResource ToggleSwitch}" IsChecked="{Binding HealAllies}" VerticalAlignment="Center"
+                          ToolTip="Heal Allies — heals all of your units and your allies' units to full health."/>
+                <TextBlock Text="Heal allies" Style="{StaticResource TextBody}" VerticalAlignment="Center" Margin="10,0,0,0"/>
+            </StackPanel>
+            <StackPanel Style="{StaticResource ToggleRow}">
+                <CheckBox Style="{StaticResource ToggleSwitch}" IsChecked="{Binding WeakenEnemies}" VerticalAlignment="Center"
+                          ToolTip="Weaken Enemies — zeroes enemy money and tech, and reduces enemy units/cities to minimum health."/>
+                <TextBlock Text="Weaken enemies" Style="{StaticResource TextBody}" VerticalAlignment="Center" Margin="10,0,0,0"/>
+            </StackPanel>
+        </UniformGrid>
+    </StackPanel>
+</UserControl>

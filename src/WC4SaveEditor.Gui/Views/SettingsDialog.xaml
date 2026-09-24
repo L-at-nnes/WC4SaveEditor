@@ -1,0 +1,23 @@
+<Window x:Class="WC4SaveEditor.Gui.Views.SettingsDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Settings" Height="280" Width="380" ResizeMode="NoResize" WindowStartupLocation="CenterOwner"
+        Icon="/Assets/AppIcon.ico"
+        Background="{StaticResource BackgroundBrush}" FontFamily="{StaticResource UiFont}">
+    <StackPanel Margin="20">
+        <TextBlock Text="Settings" Style="{StaticResource TextSectionTitle}" Margin="0,0,0,16"/>
+
+        <Button Content="Refresh save file list" Style="{StaticResource ButtonBase}" HorizontalAlignment="Left"
+                Click="Refresh_Click"
+                ToolTip="Re-scan the LocalState folder for save files (use this after starting a new game or a new conquest slot)"/>
+
+        <TextBlock Text="Every Save creates or reuses a single '.bak' copy of the original file, made the first time a given save is written to."
+                   Style="{StaticResource TextCaption}" TextWrapping="Wrap" Margin="0,20,0,0"/>
+
+        <TextBlock Text="WC4 Save Editor" Style="{StaticResource TextBodyEmphasis}" Margin="0,24,0,4"/>
+        <TextBlock Text="A save file editor for World Conqueror 4." Style="{StaticResource TextCaption}" TextWrapping="Wrap"/>
+
+        <Button Content="Close" Style="{StaticResource ButtonBase}" HorizontalAlignment="Right" Margin="0,24,0,0"
+                Click="Close_Click"/>
+    </StackPanel>
+</Window>

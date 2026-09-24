@@ -1,0 +1,49 @@
+<UserControl x:Class="WC4SaveEditor.Gui.Views.TeamPanel"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:WC4SaveEditor.Gui.Controls">
+    <StackPanel>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="Teams" Style="{StaticResource SectionHeader}" Grid.Column="0"/>
+            <Button Grid.Column="1" Content="Unite team" Style="{StaticResource ButtonBase}" VerticalAlignment="Center"
+                    Command="{Binding UniteTeamCommand}"
+                    ToolTip="Unite Team — moves every player onto your team (player 0)."/>
+        </Grid>
+        <TextBlock Text="Drag a country card between columns to change its team." Style="{StaticResource TextCaption}" Margin="0,0,0,12"/>
+
+        <ItemsControl ItemsSource="{Binding Columns}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Border Background="{StaticResource SurfaceBrush}" BorderBrush="{StaticResource BorderBrush0}"
+                            BorderThickness="1" CornerRadius="8" Padding="10" Margin="0,0,12,12" Width="300" MinHeight="200"
+                            AllowDrop="True" Drop="Column_Drop" DragOver="Column_DragOver">
+                        <StackPanel>
+                            <TextBlock Text="{Binding Title}" Style="{StaticResource TextBodyEmphasis}" Margin="0,0,0,8"/>
+                            <ItemsControl ItemsSource="{Binding Members}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <WrapPanel Width="278"/>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <controls:CountryCard CardData="{Binding}" IsDraggable="True"/>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </Border>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </StackPanel>
+</UserControl>
