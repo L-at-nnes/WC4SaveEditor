@@ -27,7 +27,7 @@ public partial class TeamPanelViewModel : ObservableObject
         _document = document;
 
         var cards = document.Players
-            .Select((p, i) => new CountryCardViewModel(i, p))
+            .Select((p, i) => new CountryCardViewModel(i, p, document))
             .ToList();
 
         var columns = new ObservableCollection<TeamColumnViewModel>();

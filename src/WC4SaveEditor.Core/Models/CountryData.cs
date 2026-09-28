@@ -9,6 +9,10 @@ public sealed class CountryData
     public const int CurrencyFieldOffset = 8;
     public const int TeamIdFieldOffset = 4 + 4 + 12 + 4;
 
+    private const int UnknownArr5StartOffset = 4 + 4 + 12 + 4 + 4 + 4 + 8 + 4 + 16;
+    private const int EliminatedIndexInUnknownArr5 = 456;
+    public const int EliminatedFieldOffset = UnknownArr5StartOffset + EliminatedIndexInUnknownArr5;
+
     public uint TurnOrder { get; init; }
     public uint CountryId { get; init; }
     public required uint[] Currency { get; init; }
@@ -20,6 +24,19 @@ public sealed class CountryData
     public required byte[] UnknownArr4 { get; init; }
     public required byte[] UnknownArr5 { get; init; }
 
+    /// <summary>
+    /// The game itself flips this to true once a country owns zero tiles, false while it still
+    /// holds any - confirmed by diffing a real save before/after an in-game elimination. Any
+    /// code that removes a country's last tile must set this too, or the game's own turn/AI
+    /// logic (which reads this flag directly) chokes on a country it still thinks is alive but
+    /// that owns nothing.
+    /// </summary>
+    public bool IsEliminated
+    {
+        get => UnknownArr5[EliminatedIndexInUnknownArr5] != 0;
+        set => UnknownArr5[EliminatedIndexInUnknownArr5] = (byte)(value ? 1 : 0);
+    }
+
     public CountryData Clone() => new()
     {
         TurnOrder = TurnOrder,
@@ -27,11 +44,11 @@ public sealed class CountryData
         Currency = (uint[])Currency.Clone(),
         BotFlag = BotFlag,
         TeamId = TeamId,
-        UnknownArr2 = UnknownArr2,
-        UnknownColor = UnknownColor,
-        PrimaryColor = PrimaryColor,
-        UnknownArr4 = UnknownArr4,
-        UnknownArr5 = UnknownArr5,
+        UnknownArr2 = (byte[])UnknownArr2.Clone(),
+        UnknownColor = UnknownColor.Select(c => (byte[])c.Clone()).ToArray(),
+        PrimaryColor = (byte[])PrimaryColor.Clone(),
+        UnknownArr4 = (byte[])UnknownArr4.Clone(),
+        UnknownArr5 = (byte[])UnknownArr5.Clone(),
     };
 
     public static CountryData ReadFrom(ByteCursor c) => new()

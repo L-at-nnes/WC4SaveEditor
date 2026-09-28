@@ -22,6 +22,10 @@ public partial class ConquerProvincePanel : UserControl
         {
             return;
         }
+        if (!card.IsAlive)
+        {
+            return;
+        }
         viewModel.SelectedAnnexer = card;
     }
 

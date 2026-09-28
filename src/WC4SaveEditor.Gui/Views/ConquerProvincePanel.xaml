@@ -21,6 +21,7 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <controls:CountryCard CardData="{Binding}" IsSelected="{Binding IsSelected}"
+                                                   IsEnabled="{Binding IsAlive}" Opacity="{Binding IsAlive, Converter={StaticResource BoolToOpacityConverter}}"
                                                    MouseLeftButtonUp="Annexer_Click"/>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>

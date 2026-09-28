@@ -9,6 +9,22 @@ public static class ConquestOperations
     public const byte MainPlayer = 0;
     public const int LandmineOwnerOffset = 2;
 
+    /// <summary>Whether a player still owns at least one tile - a dead/eliminated country owns none.</summary>
+    public static bool PlayerHasTerritory(SaveDocument doc, int playerId)
+    {
+        foreach (var row in doc.UnitOwnerData)
+        {
+            foreach (var owner in row)
+            {
+                if (owner == (byte)playerId)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     public static ConversionStats ConvertPlayer(SaveDocument doc, int oldPlayer, int newPlayer)
     {
         if (oldPlayer < 0 || newPlayer < 0)
@@ -46,10 +62,17 @@ public static class ConquestOperations
         }
 
         WriteAllUnitOwners(doc);
+        UpdateEliminationFlags(doc);
 
         var destinationPositions = CollectPlayerPositions(doc, newPlayer);
         ConvertUnitOwnershipMetadata(doc, destinationPositions);
-        ConvertLandmineOwners(doc, oldPlayer, newPlayer);
+
+        // Tiles owned by the main player are never taken above, so their landmines must stay
+        // put too - otherwise a landmine ends up owned by someone whose territory never changed.
+        if (oldPlayer != MainPlayer)
+        {
+            ConvertLandmineOwners(doc, oldPlayer, newPlayer);
+        }
 
         return stats;
     }
@@ -124,6 +147,7 @@ public static class ConquestOperations
         }
 
         WriteAllUnitOwners(doc);
+        UpdateEliminationFlags(doc);
         ConvertUnitOwnershipMetadata(doc, positions);
 
         var minesConverted = 0;
@@ -172,6 +196,7 @@ public static class ConquestOperations
 
         doc.UnitOwnerData[y][x] = (byte)newPlayer;
         SaveFileWriter.WriteByteAt(doc, doc.Offsets.TileOffset(y, x), (byte)newPlayer);
+        UpdateEliminationFlags(doc);
     }
 
     public static void ChangePlayerTeam(SaveDocument doc, int playerId, uint teamId)
@@ -221,6 +246,7 @@ public static class ConquestOperations
         }
 
         WriteAllUnitOwners(doc);
+        UpdateEliminationFlags(doc);
         return stats;
     }
 
@@ -247,7 +273,40 @@ public static class ConquestOperations
         }
 
         WriteAllUnitOwners(doc);
+        UpdateEliminationFlags(doc);
         return stats;
+    }
+
+    /// <summary>
+    /// Recomputes and writes every player's <see cref="CountryData.IsEliminated"/> flag from
+    /// actual tile ownership. Must run after any change to tile ownership - the real game reads
+    /// this flag directly and misbehaves if a country shows zero tiles but isn't marked eliminated.
+    /// </summary>
+    private static void UpdateEliminationFlags(SaveDocument doc)
+    {
+        var hasTerritory = new bool[doc.Players.Count];
+        foreach (var row in doc.UnitOwnerData)
+        {
+            foreach (var owner in row)
+            {
+                if (owner != TileUnowned && owner < doc.Players.Count)
+                {
+                    hasTerritory[owner] = true;
+                }
+            }
+        }
+
+        for (var i = 0; i < doc.Players.Count; i++)
+        {
+            var player = doc.Players[i];
+            var eliminated = !hasTerritory[i];
+            if (player.IsEliminated == eliminated)
+            {
+                continue;
+            }
+            player.IsEliminated = eliminated;
+            SaveFileWriter.WriteByteAt(doc, doc.Offsets.PlayerOffsets[i] + CountryData.EliminatedFieldOffset, (byte)(eliminated ? 1 : 0));
+        }
     }
 
     private static void WriteAllUnitOwners(SaveDocument doc)

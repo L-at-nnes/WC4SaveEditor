@@ -51,7 +51,7 @@ public partial class MapPanelViewModel : ObservableObject
         _document = document;
         IsFlyoutOpen = false;
         SelectedTile = null;
-        Players = new ObservableCollection<CountryCardViewModel>(document.Players.Select((p, i) => new CountryCardViewModel(i, p)));
+        Players = new ObservableCollection<CountryCardViewModel>(document.Players.Select((p, i) => new CountryCardViewModel(i, p, document)));
 
         var height = document.UnitOwnerData.Length;
         var width = height == 0 ? 0 : document.UnitOwnerData[0].Length;

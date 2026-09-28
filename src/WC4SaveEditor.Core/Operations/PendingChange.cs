@@ -18,14 +18,16 @@ public sealed class MaxMoneyChange : PendingChange
 
 public sealed class MaxCityTechChange : PendingChange
 {
-    public override bool IsStructural => false;
+    // Structural: must run after annexation changes so cities gained via annexation are included.
+    public override bool IsStructural => true;
     public override string Description => "Max city tech";
     public override void Apply(SaveDocument doc) => StatOperations.SetPlayerMaxCityTech(doc, ConquestOperations.MainPlayer, 4);
 }
 
 public sealed class MaxCityLevelChange : PendingChange
 {
-    public override bool IsStructural => false;
+    // Structural: must run after annexation changes so cities gained via annexation are included.
+    public override bool IsStructural => true;
     public override string Description => "Max city level";
     public override void Apply(SaveDocument doc) => StatOperations.SetPlayerMaxCityLevel(doc, ConquestOperations.MainPlayer, 4);
 }

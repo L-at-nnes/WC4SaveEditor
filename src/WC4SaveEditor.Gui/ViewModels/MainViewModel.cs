@@ -1,5 +1,6 @@
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Threading.Tasks;
 using System.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -25,6 +26,9 @@ public partial class MainViewModel : ObservableObject
 
     [ObservableProperty]
     private bool _isDocumentLoaded;
+
+    [ObservableProperty]
+    private bool _isSaving;
 
     public QuickTogglesViewModel QuickToggles { get; }
     public TeamPanelViewModel TeamPanel { get; }
@@ -130,16 +134,17 @@ public partial class MainViewModel : ObservableObject
     }
 
     [RelayCommand(CanExecute = nameof(CanSave))]
-    private void Save()
+    private async Task Save()
     {
         if (Document is null)
         {
             return;
         }
 
+        IsSaving = true;
         try
         {
-            Queue.Commit(Document);
+            await Task.Run(() => Queue.Commit(Document));
             NotificationCenter.Success($"Saved {Path.GetFileName(Document.FilePath)} (backup kept as .bak).");
             LoadDocument(Document.FilePath);
         }
@@ -147,7 +152,13 @@ public partial class MainViewModel : ObservableObject
         {
             NotificationCenter.Error($"Save failed: {ex.Message}");
         }
+        finally
+        {
+            IsSaving = false;
+        }
     }
 
-    private bool CanSave() => IsDocumentLoaded && PendingCount > 0;
+    private bool CanSave() => IsDocumentLoaded && PendingCount > 0 && !IsSaving;
+
+    partial void OnIsSavingChanged(bool value) => SaveCommand.NotifyCanExecuteChanged();
 }

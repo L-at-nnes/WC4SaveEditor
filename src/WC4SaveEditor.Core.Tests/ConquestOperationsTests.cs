@@ -11,7 +11,15 @@ public class ConquestOperationsTests
     private static SaveDocument BuildMinimalDocument(int width, int height, byte[][] owners)
     {
         var offsets = new OffsetTable { UnitOwnerGridStart = 0, MapWidth = width };
-        var rawBuffer = new byte[width * height];
+        var gridSize = width * height;
+
+        var players = new List<CountryData>
+        {
+            new() { Currency = [0, 0, 0], UnknownArr2 = new byte[4], UnknownColor = [new byte[4], new byte[4]], PrimaryColor = new byte[4], UnknownArr4 = new byte[16], UnknownArr5 = new byte[460] },
+            new() { Currency = [0, 0, 0], UnknownArr2 = new byte[4], UnknownColor = [new byte[4], new byte[4]], PrimaryColor = new byte[4], UnknownArr4 = new byte[16], UnknownArr5 = new byte[460] },
+        };
+
+        var rawBuffer = new byte[gridSize + players.Count * CountryData.StructSize];
         for (var row = 0; row < height; row++)
         {
             for (var col = 0; col < width; col++)
@@ -19,12 +27,10 @@ public class ConquestOperationsTests
                 rawBuffer[row * width + col] = owners[row][col];
             }
         }
-
-        var players = new List<CountryData>
+        for (var i = 0; i < players.Count; i++)
         {
-            new() { Currency = [0, 0, 0], UnknownArr2 = new byte[4], UnknownColor = [new byte[4], new byte[4]], PrimaryColor = new byte[4], UnknownArr4 = new byte[16], UnknownArr5 = new byte[460] },
-            new() { Currency = [0, 0, 0], UnknownArr2 = new byte[4], UnknownColor = [new byte[4], new byte[4]], PrimaryColor = new byte[4], UnknownArr4 = new byte[16], UnknownArr5 = new byte[460] },
-        };
+            offsets.PlayerOffsets.Add(gridSize + i * CountryData.StructSize);
+        }
 
         return new SaveDocument
         {
@@ -97,14 +103,11 @@ public class ConquestOperationsTests
     {
         var owners = new[] { new byte[] { 0, 1 }, new byte[] { 1, 1 } };
         var doc = BuildMinimalDocument(2, 2, owners);
-        doc.Offsets.PlayerOffsets.Add(1000);
-        doc.Offsets.PlayerOffsets.Add(1000 + CountryData.StructSize);
-        doc.RawBuffer = new byte[2000];
 
         ConquestOperations.ChangePlayerTeam(doc, 1, teamId: 7);
 
         Assert.Equal(7u, doc.Players[1].TeamId);
-        var writtenOffset = 1000 + CountryData.StructSize + CountryData.TeamIdFieldOffset;
+        var writtenOffset = doc.Offsets.PlayerOffsets[1] + CountryData.TeamIdFieldOffset;
         Assert.Equal(7u, System.Buffers.Binary.BinaryPrimitives.ReadUInt32LittleEndian(doc.RawBuffer.AsSpan(writtenOffset, 4)));
     }
 }

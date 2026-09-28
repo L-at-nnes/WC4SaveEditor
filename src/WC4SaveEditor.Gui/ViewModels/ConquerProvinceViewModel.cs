@@ -33,7 +33,7 @@ public partial class ConquerProvinceViewModel : ObservableObject
         _document = document;
         _selectedProvincesByTarget.Clear();
         _suppressHandling = true;
-        var cards = document.Players.Select((p, i) => new CountryCardViewModel(i, p)).ToList();
+        var cards = document.Players.Select((p, i) => new CountryCardViewModel(i, p, document)).ToList();
         Annexers = new ObservableCollection<CountryCardViewModel>(cards);
         Targets = new ObservableCollection<SelectableCountryViewModel>(cards.Select(c => new SelectableCountryViewModel(c)));
         SelectedAnnexer = null;
