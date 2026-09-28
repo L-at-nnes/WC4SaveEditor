@@ -6,7 +6,7 @@ A save file editor for World Conqueror 4 (Microsoft Store version), with a dark,
 
 1. Run `build.ps1` (PowerShell) to produce a single self-contained `WC4SaveEditor.exe` at the repository root. No .NET runtime needs to be installed on the machine that runs it.
 2. Launch `WC4SaveEditor.exe`. It auto-detects your World Conqueror 4 save folder (`%LOCALAPPDATA%\Packages\EasyTech.WorldConqueror4_*\LocalState`) and lists every save file found there along the top bar.
-3. Pick a save file, configure whatever changes you want across the panels below, then click **Save** in the top-right corner. Nothing is written to disk until you click Save — a `.bak` copy of the original file is created automatically the first time you save.
+3. Pick a save file, configure whatever changes you want across the panels below, then click **Save** in the top-right corner. Nothing is written to disk until you click Save.
 
 ## Panels
 

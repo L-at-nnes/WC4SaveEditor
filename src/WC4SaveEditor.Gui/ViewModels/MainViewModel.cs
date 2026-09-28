@@ -145,7 +145,7 @@ public partial class MainViewModel : ObservableObject
         try
         {
             await Task.Run(() => Queue.Commit(Document));
-            NotificationCenter.Success($"Saved {Path.GetFileName(Document.FilePath)} (backup kept as .bak).");
+            NotificationCenter.Success($"Saved {Path.GetFileName(Document.FilePath)}.");
             LoadDocument(Document.FilePath);
         }
         catch (Exception ex)

@@ -25,20 +25,5 @@ public static class SaveFileWriter
         doc.RawBuffer = newBuffer;
     }
 
-    public static void EnsureBackup(string filePath)
-    {
-        var backupPath = filePath + ".bak";
-        if (File.Exists(backupPath))
-        {
-            return;
-        }
-
-        File.Copy(filePath, backupPath);
-    }
-
-    public static void Commit(SaveDocument doc)
-    {
-        EnsureBackup(doc.FilePath);
-        File.WriteAllBytes(doc.FilePath, doc.RawBuffer);
-    }
+    public static void Commit(SaveDocument doc) => File.WriteAllBytes(doc.FilePath, doc.RawBuffer);
 }

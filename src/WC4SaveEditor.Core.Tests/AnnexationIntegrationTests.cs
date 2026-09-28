@@ -40,7 +40,6 @@ public class AnnexationIntegrationTests
         finally
         {
             File.Delete(path);
-            File.Delete(path + ".bak");
         }
     }
 
@@ -70,7 +69,6 @@ public class AnnexationIntegrationTests
         finally
         {
             File.Delete(path);
-            File.Delete(path + ".bak");
         }
     }
 
@@ -103,7 +101,6 @@ public class AnnexationIntegrationTests
         finally
         {
             File.Delete(path);
-            File.Delete(path + ".bak");
         }
     }
 
@@ -142,7 +139,6 @@ public class AnnexationIntegrationTests
         finally
         {
             File.Delete(path);
-            File.Delete(path + ".bak");
         }
     }
 }

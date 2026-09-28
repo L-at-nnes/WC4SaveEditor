@@ -11,9 +11,6 @@
                 Click="Refresh_Click"
                 ToolTip="Re-scan the LocalState folder for save files (use this after starting a new game or a new conquest slot)"/>
 
-        <TextBlock Text="Every Save creates or reuses a single '.bak' copy of the original file, made the first time a given save is written to."
-                   Style="{StaticResource TextCaption}" TextWrapping="Wrap" Margin="0,20,0,0"/>
-
         <TextBlock Text="WC4 Save Editor" Style="{StaticResource TextBodyEmphasis}" Margin="0,24,0,4"/>
         <TextBlock Text="A save file editor for World Conqueror 4." Style="{StaticResource TextCaption}" TextWrapping="Wrap"/>
 

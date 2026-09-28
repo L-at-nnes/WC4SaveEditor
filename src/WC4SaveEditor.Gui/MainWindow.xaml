@@ -46,7 +46,7 @@
                         <TextBlock Text="{Binding PendingCount, StringFormat='{}{0} pending'}" Style="{StaticResource TextCaption}"
                                    VerticalAlignment="Center" Margin="0,0,12,0"/>
                         <Button Content="Save" Style="{StaticResource AccentButton}" Command="{Binding SaveCommand}"
-                                ToolTip="Write every queued change to the save file (creates a .bak backup on first write)" Margin="0,0,8,0"/>
+                                ToolTip="Write every queued change to the save file" Margin="0,0,8,0"/>
                         <Button Content="&#9881;" FontSize="16" Width="36" Height="36" Style="{StaticResource ButtonBase}"
                                 Click="Settings_Click" ToolTip="Settings"/>
                     </StackPanel>

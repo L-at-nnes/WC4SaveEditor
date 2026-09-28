@@ -28,7 +28,6 @@ public class ChangeQueueOrderingTests
         finally
         {
             File.Delete(path);
-            File.Delete(path + ".bak");
         }
     }
 }
